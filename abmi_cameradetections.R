@@ -7,28 +7,11 @@ library(readr)
 library(stringr)
 library(ggplot2)
 library(camtrapR)
-library(ggfortify)
-library(ggrepel)
-library(forcats)
 library(lubridate)
-library(camtrapR)
-library(overlap)
-library(ggmap)
-library(reshape2)
 library(corrplot)
-library(terra)
-library(mapview)
-library(sf)
 library(exactextractr)
 library(xml2)
-library(geodata)
-library(viridis)
-library(scales)
-library(colorspace)
-library(spOccupancy)
-library(ClimateNAr)
-library(ubms)
-library(data.table)
+
 
 # Camera Reports
 all_main_reports <- vroom::vroom("data/ABMI EH 2014-2019 Main Reports.csv")
@@ -106,6 +89,7 @@ independent_events %>%
 
 thesis_main_reports <- independent_events
 
-
+#Write detection data to csv
+write.csv(thesis_main_reports, file = "data/abmi_weather_detections.csv")
 
 
