@@ -34,7 +34,7 @@ camlocations <- all_main_reports %>%
   distinct(location, .keep_all = TRUE)
 
 # Join the two datasets by Station
-check_coords <- ehs_humanfootprint_merged %>%
+check_coords <- ehs_habitat %>%
   left_join(camlocations %>% dplyr::select(location, location_id, latitude_cam = latitude, longitude_cam = longitude),
             by = "location")
 
@@ -56,5 +56,19 @@ covariates_fixed <- check_coords %>%
   ) %>%
   dplyr::select(-latitude_cam, -longitude_cam, -lat_mismatch, -lon_mismatch, -Lat, -Long)
 
+#Canopy cover covariates (I recommend using the 150m buffered canopy cover measure)
+names(covariates_fixed)
+
+canopy_cover <- covariates_fixed %>%
+  select(project, location, NR, NSR, location_id, Latitude, Longitude, CCDecidR_buf:CCSpruce4_buf)
+
+#Canopy cover covariates are a score of each type of tree's relative canopy cover for each site
+#I'd recommend combining into some combined unified canopy cover covariate, probably could just add them all together
+
+#As for elevation, we'll need to extract that with the real coordinates, if you can write a script,
+#Marcus can just run it on the real locations along with the weather data
+
 #Write CSV of covariate data for later analyses
 write.csv(covariates_fixed, file = "data/abmi_habitat_covars.csv")
+write.cvs(canopy_cover, file = "data/abmi_canopycover")
+
